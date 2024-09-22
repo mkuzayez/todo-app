@@ -48,10 +48,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                         const Spacer(),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         AppText(
                           text: user.name,
                           style: customTextTheme.headlineLarge!,
                           color: Theme.of(context).colorScheme.primary,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -64,10 +68,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                         const Spacer(),
-                        AppText(
-                          text: user.email,
-                          style: customTextTheme.bodyLarge!,
-                          color: Theme.of(context).colorScheme.primary,
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Flexible(
+                          flex: 100,
+                          child: AppText(
+                            text: user.email,
+                            style: customTextTheme.bodyLarge!,
+                            color: Theme.of(context).colorScheme.primary,
+                            overflow: TextOverflow.ellipsis,
+                            maxLine: 1,
+                          ),
                         ),
                       ],
                     ),
@@ -80,6 +92,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                         const Spacer(),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).pushNamed('/passChange');
@@ -105,7 +120,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   context.read<AuthBloc>().add(
                         LogOutEvent(),
                       );
-                  Navigator.of(context).pushReplacementNamed('/login');
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/login',
+                    (Route route) => false,
+                  );
                 },
               )
             ],

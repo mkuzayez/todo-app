@@ -56,77 +56,82 @@ class _EditTodoState extends State<EditTodo> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          TodoTextField(
-            controller: titleController,
-            label: 'Title',
-            style: customTextTheme.bodyMedium!,
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: TodoTextField(
-              controller: contentController,
-              label: 'Content',
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            TodoTextField(
+              controller: titleController,
+              label: 'Title',
               style: customTextTheme.bodyMedium!,
-              expands: true,
-              maxLine: null,
-              minLine: 20,
             ),
-          ),
-          const SizedBox(height: 16),
-          DeadlineField(
-            initialDate: widget.item.deadline,
-            onDatePicked: getDeadlineDate,
-          ),
-          const SizedBox(height: 16),
-          ImagePickerField(
-            existingImagePath: widget.item.image,
-            onImagePicked: onImagePicked,
-          ),
-          const SizedBox(height: 16),
-          LargeButton(
-            textWidget: AppText(
-              text: 'EDIT TODO',
-              style: customTextTheme.bodyLarge!,
-              color: Theme.of(context).colorScheme.primary,
+            const SizedBox(height: 16),
+            Expanded(
+              child: TodoTextField(
+                controller: contentController,
+                label: 'Content',
+                style: customTextTheme.bodyMedium!,
+                expands: true,
+                maxLine: null,
+                minLine: 20,
+                keyboardType: TextInputType.multiline,
+              ),
             ),
-            backgroundColor: Colors.white,
-            onPressed: () {
-              if (titleController.text.trim().isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: AppText(
-                      text: 'Title cannot be empty',
-                      style: customTextTheme.bodyMedium!,
-                      color: Colors.black,
+            const SizedBox(height: 16),
+            DeadlineField(
+              initialDate: widget.item.deadline,
+              onDatePicked: getDeadlineDate,
+            ),
+            const SizedBox(height: 16),
+            ImagePickerField(
+              existingImagePath: widget.item.image,
+              onImagePicked: onImagePicked,
+            ),
+            const SizedBox(height: 16),
+            LargeButton(
+              textWidget: AppText(
+                text: 'EDIT TODO',
+                style: customTextTheme.bodyLarge!,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              backgroundColor: Colors.white,
+              onPressed: () {
+                if (titleController.text.trim().isEmpty) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: AppText(
+                        text: 'Title cannot be empty',
+                        style: customTextTheme.bodyMedium!,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                );
-                return;
-              }
-              final updatedTodo = TodoItem(
-                title: titleController.text,
-                description: contentController.text,
-                date: widget.item.date,
-                deadline: deadline,
-                image: selectedImagePath,
-              );
-
-              context.read<TodoBloc>().add(
-                    EditTodoEvent(updatedTodo, widget.itemIdx),
                   );
+                  return;
+                }
+                final updatedTodo = TodoItem(
+                  title: titleController.text,
+                  description: contentController.text,
+                  date: widget.item.date,
+                  deadline: deadline,
+                  image: selectedImagePath,
+                );
 
-              context
-                  .read<SelectedTodoCubit>()
-                  .updateSelectedTodo(updatedTodo, widget.itemIdx);
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
+                context.read<TodoBloc>().add(
+                      EditTodoEvent(updatedTodo, widget.itemIdx),
+                    );
+
+                context
+                    .read<SelectedTodoCubit>()
+                    .updateSelectedTodo(updatedTodo, widget.itemIdx);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

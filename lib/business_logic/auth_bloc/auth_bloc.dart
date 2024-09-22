@@ -124,6 +124,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           AppState.passwordChangeSucceeded,
         ),
       );
+      emit(
+        const AuthState(
+          AppState.authorized,
+        ),
+      );
     }
   }
 }

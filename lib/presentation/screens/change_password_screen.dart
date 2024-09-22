@@ -21,14 +21,12 @@ class PasswordChangingScreenState extends State<PasswordChangingScreen> {
       TextEditingController();
   final formKey = GlobalKey<FormState>();
   late User user;
-  late String email;
 
   @override
   void initState() {
     super.initState();
     final Box sessionBox = Hive.box('sessionBox');
     user = sessionBox.get('sessionUser');
-    email = user.email;
   }
 
   @override
@@ -97,10 +95,10 @@ class PasswordChangingScreenState extends State<PasswordChangingScreen> {
                   },
                 ),
                 BlocListener<AuthBloc, AuthState>(
-                  listenWhen: (previous, current) => previous == current || previous != current,
                   child: const SizedBox(),
                   listener: (context, state) {
                     if (state.state == AppState.passwordChangeSucceeded) {
+                      Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).clearSnackBars();
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

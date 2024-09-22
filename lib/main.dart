@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/data/models/todo_item/to_do.dart';
 import 'package:todo_app/data/models/user/user.dart';
 import 'package:todo_app/theme/color_scheme.dart';
+import 'package:todo_app/theme/date_picker.dart';
 import 'package:todo_app/theme/text.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import './app_router.dart';
@@ -14,15 +15,6 @@ void main() async {
   await Hive.openBox<User>('authBox');
   await Hive.openBox('sessionBox');
   WidgetsFlutterBinding.ensureInitialized();
-
-  print(Hive.box<List>('todoBox').keys);
-  print(Hive.box<List>('todoBox').values);
-
-  print(Hive.box<User>('authBox').keys);
-  print(Hive.box<User>('authBox').values);
-
-  print(Hive.box('sessionBox').keys);
-  print(Hive.box('sessionBox').values);
 
   runApp(
     MyApp(),
@@ -40,6 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: customTextTheme,
         colorScheme: customColorTheme,
+        datePickerTheme: customDatePickerTheme,
       ),
       onGenerateRoute: appRouter.generateRoute,
       initialRoute: '/',

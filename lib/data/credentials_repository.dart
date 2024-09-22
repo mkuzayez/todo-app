@@ -13,12 +13,6 @@ class CredentialsRepository {
     sessionBox = Hive.box('sessionBox');
   }
 
-  Future<void> initBoxes() async {
-    authBox = Hive.box<User>('authBox');
-    todoBox = Hive.box<List>('todoBox');
-    sessionBox = Hive.box('sessionBox');
-  }
-
   User? getSessionUser() {
     return sessionBox.get('sessionUser');
   }

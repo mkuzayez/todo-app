@@ -12,6 +12,7 @@ class TodoTextField extends StatefulWidget {
     this.expands = false,
     this.validator,
     this.initialValue,
+    this.keyboardType = TextInputType.text,
   });
 
   final TextStyle style;
@@ -22,6 +23,7 @@ class TodoTextField extends StatefulWidget {
   final bool? expands;
   final String? Function(String?)? validator;
   final String? initialValue;
+  final TextInputType keyboardType;
 
   @override
   State<TodoTextField> createState() => _TodoTextFieldState();
@@ -38,6 +40,7 @@ class _TodoTextFieldState extends State<TodoTextField> {
         controller: widget.controller,
         minLines: widget.minLine,
         maxLines: widget.maxLine,
+        keyboardType: TextInputType.multiline,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           contentPadding:
